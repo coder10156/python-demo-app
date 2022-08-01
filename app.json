@@ -5,12 +5,6 @@
   "repository": "https://github.com/coder10156/python-demo-app",
   "keywords": ["python"],
   
-  "env": {
-    "SECRET_KEY": {
-      "description": "The secret key for the Django application.",
-      "generator": "secret"
-    }
-  },
   "environments": {
     "test": {
       "scripts": {
