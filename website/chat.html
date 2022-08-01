@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>just chatin'</title>
+		<style>
+.small{
+	font-size:small;
+}
+hr{
+background-color:white;
+}
+#box{
+text-align:center;
+border:5px outset white;
+position:fixed;
+top:80%;
+height:20%;
+width:95%;
+text-align:center;
+
+}
+#text-box{
+text-align:center;
+border:5px outset white;
+position:fixed;
+color:white;
+overflow-y:auto;
+overflow-x:none;
+top:0px;
+height:80%;
+width:95%;
+text-align:center;
+
+
+}
+#c{
+position:fixed;
+background-color:black;
+}
+a{
+background-color:rgb(0,255,255);
+color:black;
+}
+@keyframes c{
+	from{
+	background-color:rgb(0,255,255);
+	}
+	to{
+	background-color:green;
+	}
+}
+a:hover{
+animation: c 0.225s 3;
+}
+		#link{
+		position:fixed;
+		top:0px;
+		left:0px;
+		}
+		button{
+		background-color:black;
+		color:white;
+		}
+		input{
+		background-color:black;
+		color:white;
+		}
+
+#l2{
+position:fixed;
+top:10%;
+left:0px;
+}
+		</style>
+	</head>
+	<body>
+	<canvas id="c" ></canvas>
+		<div id="text-box"></div>
+		<div id="box">
+			<input id="msg" autocomplete="off"><br>
+			<button id="send">SEND</button><br>
+			<button id="logout">LOG OUT</button>
+		</div>
+		<a id="link" href="/profile.html">edit profile</a>
+		<a id="l2" href="/upload.html">upload html project</a>
+	<script>
+		function upload(){
+		location.href="/upload.html"
+		}
+		lut=document.querySelector("#logout")
+lut.addEventListener("click", function(){
+localStorage.clear()
+location.href="/"
+})
+pscroll=0
+pmsg=''
+function get(loop){
+			if(loop){
+				console.log(loop)
+				window.setTimeout(get,1000,true)}
+		fetch(location.href.split("/")[1]+"msg.txt").then(p=>p.text()).then(
+			t=>{
+			tt=document.querySelector("#text-box")
+				tt.innerHTML=t
+				if(tt.scrollTop==0 || tt.scrollTop+tt.clientHeight==pscroll){
+					tt.scrollTop=tt.scrollHeight
+				}
+			pscroll=tt.scrollHeight
+			}
+		)
+			console.log("pscroll="+pscroll)
+		}
+get(true)
+send=document.querySelector("#send")
+send.addEventListener("click",function(){
+inp=document.querySelector("#msg")
+fetch(location.href,{method:"POST",body:"msg&"+encodeURIComponent(localStorage.getItem("name"))+"&"+encodeURIComponent(localStorage.getItem("pwd"))+"&"+encodeURIComponent(inp.value)})
+inp.value=''
+	get(false)
+	tt=document.querySelector("#text-box")
+                        tt.scrollTop=tt.scrollHeight
+
+})
+c=document.querySelector("#c")
+c.width=window.innerWidth;
+c.height=window.innerHeight
+ctx=c.getContext("2d")
+p=[]
+function P(x,y){
+this.alpha=1
+this.xspeed=Math.random()*4-2
+this.yspeed=Math.random()*4-2
+this.x=x
+this.y=y
+}
+for(var i=0;i<10;i++){
+p.push(new P(Math.random()*c.width,Math.random()*c.height))
+}
+ctx.fillStyle="white"
+function animate(){
+setTimeout(animate,1000/270)
+ctx.globalAlpha="0.001"
+ctx.fillStyle="black"
+ctx.fillRect(0,0,c.width,c.height)
+ctx.globalAlpha="1"
+ctx.fillStyle="rgb("+Math.random()*55+","+Math.random()*155+","+255+")"
+	for(var i=0;i<20;i++){
+ctx.beginPath()
+ctx.arc(p[i].x,p[i].y,2,0,Math.PI*2)
+ctx.fill()
+ctx.closePath()
+p[i].x+=p[i].xspeed
+p[i].y+=p[i].yspeed
+if(Math.random()*10<0.5){
+	p[i].xspeed=0-p[i].xspeed
+	
+}
+if(Math.random()*10<0.5){
+	p[i].yspeed=0-p[i].yspeed
+	
+}
+if(p[i].x<0 || p[i].x>c.width){
+p[i].xspeed=0-p[i].xspeed
+}
+if(p[i].y<0|| p[i].y>c.height){
+p[i].yspeed=0-p[i].yspeed
+
+}
+}
+
+}
+animate()
+	</script>
+	</body>
+</html>

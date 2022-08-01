@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<canvas></canvas>
+	<script>
+c=document.
+		lunp=100
+		function Point2d(x,y,z){
+        this.x=x*(lunp/z)+c.width/2
+        this.y=y*(lunp/z)+c.height/2
+    }
+function l3d(x1,y1,z1,x2,y2,z2){
+this.points=[new Point2d(x1,y1,z1),
+new Point2d(x2,y2,z2)]
+ctx.beginPath()
+ctx.moveTo(this.points[0].x,this.points[0].y)
+ctx.lineTo(this.points[1].x,this.points[1].y)
+ctx.stroke()
+ctx.closePath()
+}
+
+function r3d(x,y,z,width,height){
+    this.points=[new Point2d(x,y,z+height),
+    new Point2d(x,y,z),
+    new Point2d(x+width,y,z),
+    new Point2d(x+width,y,z+height)
+    ]
+    ctx.beginPath()
+    for(var i=0;i<this.points.length;i++){
+ 
+        ctx.lineTo(this.points[i].x,this.points[i].y)
+ctx.fill()
+
+        
+    }
+    ctx.closePath()
+}
+function L(x,z){
+this.x=x
+this.z=z
+}
+function r3dv(x,y,z,width,height){
+this.points=[
+new Point2d(x,y,z),
+    new Point2d(x+width,y,z),
+    new Point2d(x+width,y+height,z),
+    new Point2d(x,y+height,z)
+]
+ctx.beginPath()
+for(var i=0;i<4;i++){
+ctx.lineTo(this.points[i].x,this.points[i].y)
+}
+ctx.fill()
+ctx.closePath()
+}
+function t3d(x,y,z,x2,y2,z2,x3,y3,z3){
+this.points=[new Point2d(x,y,z),
+    new Point2d(x2,y2,z2),
+    new Point2d(x3,y3,z3)
+]
+ctx.beginPath()
+ctx.moveTo(this.points[0].x,this.points[0].y)
+for(var i=0;i<this.points.length;i++){
+ctx.lineTo(this.points[i].x,this.points[i].y)
+}
+ctx.fill()
+ctx.closePath()
+}
+t3d(100,100,10,150,190,10,100,170,10)
+	</script>
+</html>

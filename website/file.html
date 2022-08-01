@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>edit </title>
+		<style>
+body{
+background-color:black;
+color:white;
+}
+textarea{
+font-family:monospace;
+position:absolute;
+color:white;
+font-size:15px;
+left:20%;
+width:70%;
+top:10%;
+height:500px;
+background-image: linear-gradient(45deg, rgb(0,100,100),yellow);
+}
+button{
+font-size:15px;
+	height:10%;
+width:100%;
+justify-content:center;
+}
+#c{
+width:20%;
+	height:500px;
+overflow-y:hidden;
+font-family:monospace;
+font-size:15px;
+position:absolute;
+top:10.5%;
+
+}
+.num{
+font-family:monospace;
+	width:90%;
+font-size:15px;
+}
+		</style>
+	</head>
+	<body>
+		<button>SAVE</button>
+		<br>		
+		<div id="c"></div><textarea rows="10" cols="30"  style="resize:none;" spellcheck="false"></textarea>
+	<script>
+		function count(text){
+		l=text.split("\n").length
+		div=document.querySelector("div")
+		div.innerHTML=""
+		for(var i=1;i<=l;i++){
+			div.innerHTML+="<div class='num'>"+i+"</div>"
+		}
+		}
+		var an=0
+		function a(){
+		requestAnimationFrame(a)
+		an+=1
+		if(an>=360){
+		an=an-360
+		}
+		tarea=document.querySelector("textarea")
+			tarea.addEventListener("change",function(){
+			console.log("change")
+				count(tarea.value)
+			})
+		tarea.style.backgroundImage="linear-gradient("+an+"deg, rgb(0,0,0) , rgb(0,0,0), rgb(0,0,0),rgb(0,0,0),white)"
+		}
+                tarea=document.querySelector("textarea")
+ptext=tarea.value                
+count(tarea.value)
+function recount(){
+	if(ptext!=tarea.value){	
+		count(tarea.value)
+ptext=tarea.value
+	}
+		div.scrollTop=tarea.scrollTop
+		requestAnimationFrame(recount)
+		}
+recount()
+		i=prompt("file name:")
+document.querySelector("title").innerHTML+=i
+fetch("/b",{method:"POST",body:"rf&"+localStorage.getItem("admname")+"&"+localStorage.getItem("admpass")+"&"+i}).then(r=>r.text()).then(t=>{
+document.querySelector("textarea").value=t
+count(t)
+}
+)
+	b=document.querySelector("button")
+b.addEventListener("click",function(){
+t=document.querySelector("textarea").value
+e=encodeURIComponent
+	fetch("/h",{method:"POST",body:"wf&"+localStorage.getItem("admname")+"&"+localStorage.getItem("admpass")+"&"+e(i)+"&"+e(t)})
+})
+	</script>
+	</body>
+</html>

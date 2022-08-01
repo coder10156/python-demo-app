@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>sign up</title>
+		<meta charset="utf-8">
+<style>
+*{
+background-color:black;
+color:white;
+}
+</style>
+	</head>
+	<body>
+		<div>
+		name: <input id="name"><br>
+		password: <input id="pass" type="password"><br>
+		description:<br><textarea placeholder="describe yourself here"></textarea><br>
+		piece of text(used for profile animation):<input id="fav">
+		<button id='signup'>SIGN UP</button><br>
+		</div>
+		<script>
+name1=document.querySelector("#name")
+pass=document.querySelector("#pass")
+div=document.querySelector("div")
+s=document.querySelector("#signup")
+s.addEventListener("click",function(){
+fword=document.querySelector("#fav")
+	name1=document.querySelector("#name")
+div=document.querySelector("div")
+d=document.querySelector("textarea")
+	fetch(location.href,{method:"POST",body:"signup&"+encodeURIComponent(name1.value)+"&"+encodeURIComponent(pass.value)+"&"+encodeURIComponent(d.value)+"&"+encodeURIComponent(fav.value)}).then(p=>p.text()).then(t=>{
+		if(t==""){
+localStorage.setItem("des",d.value)
+localStorage.setItem("name",name1.value)
+localStorage.setItem("pwd",pass.value)
+localStorage.setItem("fav",fav.value)
+			setTimeout(function(){
+location.href="/chat.html"},1000/24)}else{
+	div.innerHTML="name: <input id='name'><br>password: <input id='pass'><br><textarea placeholder='describe yourself here'></textarea><br>piece of text(used for profile animation)<input id='fav'><br>"+t
+name1=document.querySelector("#name")
+pass=document.querySelector("#pass")
+div=document.querySelector("div")
+			}
+})
+
+	})
+		</script>
+	</body>
+</html>

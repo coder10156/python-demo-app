@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>login</title>
+		<meta charset="utf-8">
+<style>
+*{
+color:white;
+background-color:black;
+}
+</style>
+	</head>
+	<body>
+		<div>
+		name: <input id="name"><br>
+		password: <input id="pass" type="password"><br>
+		<button id="login">LOGIN</button><br>
+		</div>
+		<script>
+l=document.querySelector("#login")
+l.addEventListener("click",function(){
+name1=document.querySelector("#name")
+console.log(name1)
+pass=document.querySelector("#pass")
+div=document.querySelector("div")
+retry=false
+	fetch(location.href,{
+method:"POST",
+body:"login&"+encodeURIComponent(name1.value)+"&"+encodeURIComponent(pass.value)
+}).then(r=>r.text()).then(t=>{
+	if(t=="success"){
+	localStorage.setItem("name",name1.value)
+	localStorage.setItem("pwd",pass.value)
+	fetch("/hi",{method:"POST",body:"get&"+encodeURIComponent(name1.value)+"&"+encodeURIComponent(pass.value)}).then(r=>r.text()).then(t=>{
+	u1=t.split("&")[0]
+	u2=t.split("&")[1]
+	d=decodeURIComponent
+	des=d(u1)
+	fav=d(u2)
+	localStorage.setItem("fav",fav)
+	localStorage.setItem("des",des)
+	location.href="/chat.html"
+	})
+	
+		
+	}else{
+	if(retry==false){
+		div.innerHTML+="<br>Try again. Incorrect credentials."
+		location.href="/"
+	}
+	retry=true
+	}
+})
+})
+s=document.querySelector("#signup")
+		</script>
+	</body>
+</html>

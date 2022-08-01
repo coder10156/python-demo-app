@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>profile</title>
+		<meta charset="utf-8">
+<style>
+*{
+background-color:black;
+color:rgb(255, 255, 255);
+}
+</style>
+	</head>
+	<body>
+		name: <input type="text"><br>
+		password: <input type="password"><br>
+		description: <textarea></textarea><br>
+		piece of text: <input type="text"><br>
+		<button>update</button>
+		<div></div>
+	<script>
+var uname=document.querySelectorAll("input")[0]
+uname.value=localStorage.getItem("name")
+var pass=document.querySelectorAll("input")[1]
+pass.value=localStorage.getItem("pwd")
+var tarea=document.querySelectorAll("textarea")[0]
+tarea.value=localStorage.getItem("des").replace("<br>","\n")
+var button=document.querySelectorAll("button")[0]
+var div=document.querySelectorAll("div")[0]
+var fav=document.querySelectorAll("input")[2]
+fav.value=localStorage.getItem("fav")
+button.addEventListener("click",function(){
+	fetch("/hi",{method:"POST",body:"creds&"+encodeURIComponent(localStorage.getItem("name"))+"&"+encodeURIComponent(localStorage.getItem("pwd"))+"&"+encodeURIComponent(uname.value)+"&"+encodeURIComponent(pass.value)+"&"+encodeURIComponent(tarea.value)+"&"+encodeURIComponent(fav.value)}).then(r=>r.text()).then(t=>{
+		if(t=="hi"){
+localStorage.setItem("name",uname.value)
+localStorage.setItem("pwd",pass.value)
+localStorage.setItem("des",tarea.value)	
+div.innerHTML=""
+		}else{
+		div.innerHTML=t
+		}
+	})
+})
+	</script>
+	</body>
+</html>

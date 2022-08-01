@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ceapa</title>
+    </head>
+    <body>
+        <canvas></canvas>
+    <script>
+        c=document.querySelector("canvas")
+        c.width=window.innerWidth
+        c.height=window.innerHeight
+        c.style.position="fixed"
+        clicked=false
+        ctx=c.getContext("2d")
+        mouseX=0
+        mouseY=0
+        addEventListener("mousedown",function(){
+            clicked=true
+        })
+        addEventListener("mouseup",function(){
+clicked=false
+
+        })
+        addEventListener("mousemove",function(e){
+            mouseX=e.clientX
+            mouseY=e.clientY
+        })
+   function animate(){
+ctx.fillRect(mouseX,mouseY,10,10)
+       requestAnimationFrame(animate)
+   }  
+   animate()   
+    </script>
+    </body>
+</html>

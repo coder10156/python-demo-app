@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+        <body>
+                <div></div>
+        <script>
+els=[]
+function ban(bn){
+bn=bn.replace("and","&")
+console.log(localStorage.getItem("admname")+"&"+localStorage.getItem("admpass")+"&"+bn)
+        fetch("/",{method:"POST",body:"ban&"+localStorage.getItem("admname")+"&"+localStorage.getItem("admpass")+"&"+bn})}
+function reban(){
+n=prompt("name to ban:")
+ban(n)
+reban()
+}
+reban()
+        </script>
+        </body>
+</html>

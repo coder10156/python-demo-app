@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+	<script>
+		name=prompt("name: ")
+pass=prompt("password: ")
+fetch("/chat.html",{method:"POST",body:"admin&"+name+"&"+pass}).then(r=>r.text()).then(t=>{
+	if(t!="auth"){
+	document.body.innerHTML="nowon hackz this site"
+	}else{
+	localStorage.setItem("admname",name)
+	localStorage.setItem("admpass",pass)
+	location.href="/admin.html"
+	}
+})
+	</script>
+	</body>
+</html>
